@@ -1,0 +1,36 @@
+.sav2-main-cont {
+    margin-top: 30px;
+}
+
+.sav2-mb-1 {
+    margin-bottom: 1rem;
+}
+
+.sav2-mt-1 {
+    margin-top: 1rem;
+}
+
+.sav2-opt-button {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 2px 9px 5px 9px;
+}
+
+.no-placeholder::placeholder {
+    color: white;
+}
+
+.datepicker {
+    padding: 10px 10px 10px 10px;
+}
+
+.note-label {
+    display: inline-block;
+    padding: 2px 6px 3px;
+    line-height: normal;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    cursor: pointer;
+}
