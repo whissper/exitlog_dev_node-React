@@ -60,7 +60,8 @@ function TabLog(props) {
             <br />
             <br />
             <DeleteRecordModal data={deleteRecordModalData} />
-            <UpdateRecordModal data={updateRecordModalData} 
+            <UpdateRecordModal panelData={panelData}
+                data={updateRecordModalData} 
                 pointsData={pointsData}/>
         </React.Fragment>
     );
