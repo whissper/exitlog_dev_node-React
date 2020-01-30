@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import './ExitObject.css';
 import { Col, Form, InputGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { ReactDadata } from 'react-dadata';
+import DadataSuggestions from 'react-dadata-suggestions';
+import "react-dadata-suggestions/dist/styles.css";
 
 
 function ExitObject(props) {
@@ -11,34 +12,12 @@ function ExitObject(props) {
     const objectNameInput = useRef(null);
 
     const {
+        panelData,
         objectIndex,
         data,
         onObjectUpdate,
         onObjectDelete
     } = props;
-    
-    useEffect(()=> {
-        const objectNameElement = objectNameInput.current.textInput;
-
-        const handleBlur = (e) => {
-            const value = e.target.value;
-
-            const object = {
-                objectIndex: objectIndex,
-                fields: {
-                    name: value
-                }
-            };
-
-            onObjectUpdate(object);
-        };
-
-        objectNameElement.addEventListener('blur', handleBlur);
-
-        return () => {
-            objectNameElement.removeEventListener('blur', handleBlur);
-        };
-    }, [onObjectUpdate, objectIndex]);
 
     const handleNoteChange = (e) => {
         const value = e.target.value;
@@ -47,6 +26,30 @@ function ExitObject(props) {
             objectIndex: objectIndex,
             fields: {
                 note: value
+            }
+        };
+
+        onObjectUpdate(object);
+    };
+
+    const handleObjectBlur = (e) => {
+        const value = e.target.value;
+
+        const object = {
+            objectIndex: objectIndex,
+            fields: {
+                name: value
+            }
+        };
+
+        onObjectUpdate(object);
+    };
+
+    const handleChange = (query) => {
+        const object = {
+            objectIndex: objectIndex,
+            fields: {
+                name: query
             }
         };
 
@@ -78,8 +81,8 @@ function ExitObject(props) {
         const apartment = join([suggestion.data.flat_type, suggestion.data.flat], ' ');
         const geolat = (suggestion.data.qc_geo !== '5' ? suggestion.data.geo_lat : '');
         const geolon = (suggestion.data.qc_geo !== '5' ? suggestion.data.geo_lon : '');
-        
-        const oldformat = (( street.trim() === '' || building.trim() === '' ) ? '1' : '0');
+
+        const oldformat = ((street.trim() === '' || building.trim() === '') ? '1' : '0');
 
         const object = {
             objectIndex: objectIndex,
@@ -93,7 +96,7 @@ function ExitObject(props) {
                 apartment: apartment,
                 geolat: geolat,
                 geolon: geolon,
-                oldformat: oldformat 
+                oldformat: oldformat
             }
         };
 
@@ -114,6 +117,26 @@ function ExitObject(props) {
         }
     });
 
+
+    const Syktyvkar     = { "kladr_id": "1100000100000" };
+    const Ukhta         = { "kladr_id": "1100000800000" };
+    const Sosnogorsk    = { "kladr_id": "1100000600000" };
+    const Inta          = { "kladr_id": "1100000400000" };
+
+    const getLocationsBoost = () => {
+        let locationsBoost = { "locations_boost": [Syktyvkar] };
+
+        if (panelData.depID === 2) {
+            locationsBoost = { "locations_boost": [Ukhta] };
+        } else if (panelData.depID === 3) {
+            locationsBoost = { "locations_boost": [Sosnogorsk] };
+        } else if (panelData.depID === 4) {
+            locationsBoost = { "locations_boost": [Inta] };
+        }
+
+        return locationsBoost;
+    };
+
     return (
         <Col lg={12}>
             <Form.Group>
@@ -122,9 +145,10 @@ function ExitObject(props) {
                     &nbsp;Объект выхода :
                 </Form.Label>
                 <InputGroup>
-                    <ReactDadata className="form-control" name="objectName" ref={objectNameInput}
+                    <DadataSuggestions name="objectName" ref={objectNameInput}
                         token="aa87679e3bfbbdaca05a44aa93ad6af10d54045a" count={7} placeholder="Адрес"
-                        query={objectName} onChange={handleObjectChange} />
+                        query={objectName} geolocation={false} specialRequestOptions={getLocationsBoost()}
+                        onSelect={handleObjectChange} onBlur={handleObjectBlur} onChange={handleChange} />
                     <InputGroup.Append>
                         <Button variant="outline-secondary" onClick={handleDel}>
                             <FontAwesomeIcon icon={faMinus} />

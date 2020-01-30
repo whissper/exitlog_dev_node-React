@@ -18,7 +18,8 @@ function TabNewRecord(props) {
         <React.Fragment>
             <Menu data={panelData} />
             <hr />
-            <NewRecordForm pointsData={pointsData} 
+            <NewRecordForm panelData={panelData}
+                pointsData={pointsData} 
                 data={newRecordData} />
             <br />
             <br />

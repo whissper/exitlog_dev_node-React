@@ -36,6 +36,7 @@ function UpdateRecordModal(props) {
     ];
 
     const { 
+        panelData,
         data,
         pointsData 
     } = props;
@@ -387,7 +388,8 @@ function UpdateRecordModal(props) {
 
                     {
                         objects.map((object) => ( 
-                            <ExitObject key={object.objectIndex.toString()} 
+                            <ExitObject key={object.objectIndex.toString()}
+                                panelData={panelData} 
                                 objectIndex={object.objectIndex} 
                                 data={objects}
                                 onObjectUpdate={handleObjectUpdate}

@@ -10,7 +10,7 @@ function TopHeader(props) {
         <Container fluid className="sav2-top-header">
             <Row>
                 <Col className="justify-content-center align-self-center">EXIT-LOG</Col>
-                <Col xs="auto" className="justify-content-center align-self-center"> v 0.8.0</Col>
+                <Col xs="auto" className="justify-content-center align-self-center"> v 0.8.1</Col>
                 <Col xs="auto" className="justify-content-center align-self-center">
                     <FontAwesomeIcon icon={faReact} size="3x" />
                 </Col>

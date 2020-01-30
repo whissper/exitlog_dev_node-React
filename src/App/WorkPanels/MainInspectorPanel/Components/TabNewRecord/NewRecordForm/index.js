@@ -12,7 +12,7 @@ function NewRecordForm(props) {
 
     const mainInspectorPanelDispatch = useContext(MainInspectorPanelDispatch);
 
-    const { pointsData, data } = props;
+    const { panelData, pointsData, data } = props;
 
     const timeExitInput = useRef(null);
     const timeReturnInput = useRef(null);
@@ -221,6 +221,7 @@ function NewRecordForm(props) {
                 {
                     data.objects.map((object) => ( 
                         <ExitObject key={object.objectIndex.toString()} 
+                            panelData={panelData}
                             objectIndex={object.objectIndex} 
                             data={data.objects}
                             onObjectUpdate={handleObjectUpdate}
